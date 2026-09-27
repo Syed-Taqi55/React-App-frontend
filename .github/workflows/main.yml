@@ -27,6 +27,7 @@ jobs:
         run: npm run lint
 
   deploy-to-aws:
+    needs: lint-and-typecheck
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
