@@ -1,12 +1,12 @@
 .page {
-  width: min(40rem, 100%);
+  width: min(44rem, 100%);
   margin: 0 auto;
   padding: 3.5rem 1.25rem 4rem;
 }
 
 .header h1 {
   margin: 0.15rem 0 0.4rem;
-  font-size: clamp(2.4rem, 6vw, 3.4rem);
+  font-size: clamp(2.2rem, 6vw, 3.2rem);
   font-weight: 650;
   letter-spacing: -0.04em;
   line-height: 1;
@@ -26,29 +26,75 @@
   color: #5c574e;
 }
 
-.composer {
+.progress {
+  margin-top: 1rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: #efe7d8;
+  overflow: hidden;
+}
+
+.progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #1f6f5b;
+}
+
+.composer,
+.controls,
+.edit-row {
   display: flex;
-  gap: 0.6rem;
-  margin: 1.75rem 0 1.1rem;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.composer {
+  margin: 1.75rem 0 1rem;
 }
 
 .composer input,
-.edit {
-  flex: 1;
+.composer select,
+.search,
+.field select,
+.edit,
+.edit-row input,
+.edit-row select {
   min-width: 0;
   border: 1px solid #d7cfc3;
   border-radius: 0.7rem;
   background: #fffdf8;
-  padding: 0.78rem 0.9rem;
+  padding: 0.72rem 0.85rem;
   font: inherit;
   color: inherit;
 }
 
+.composer input[type='text'],
+.composer input:not([type]),
+.composer #new-task {
+  flex: 1 1 12rem;
+}
+
+.composer select,
+.composer input[type='date'],
+.edit-row select,
+.edit-row input[type='date'] {
+  flex: 0 0 auto;
+}
+
 .composer input:focus,
+.composer select:focus,
+.search:focus,
+.field select:focus,
 .edit:focus,
+.edit-row input:focus,
+.edit-row select:focus,
 .filters button:focus-visible,
 .composer button:focus-visible,
+.edit-row button:focus-visible,
 .ghost:focus-visible,
+.ghost-btn:focus-visible,
 .icon:focus-visible,
 .text:focus-visible {
   outline: 2px solid #1f6f5b;
@@ -56,7 +102,9 @@
 }
 
 .composer button,
+.edit-row button,
 .ghost,
+.ghost-btn,
 .filters button,
 .icon {
   border: 0;
@@ -65,17 +113,52 @@
   cursor: pointer;
 }
 
-.composer button {
+.composer button,
+.edit-row button[type='submit'] {
   flex-shrink: 0;
   border-radius: 0.7rem;
   background: #1f6f5b;
   color: #f6fff9;
-  padding: 0 1.1rem;
+  padding: 0.72rem 1.1rem;
   font-weight: 650;
 }
 
-.composer button:hover {
-  background: #175746;
+.composer button:hover:not(:disabled),
+.edit-row button[type='submit']:hover:not(:disabled) {
+  background-image: linear-gradient(180deg, #175746 0%, #1f6f5b 100%);
+}
+
+.composer button:disabled,
+.edit-row button[type='submit']:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ghost-btn {
+  flex-shrink: 0;
+  border-radius: 0.7rem;
+  padding: 0.72rem 0.9rem;
+  color: #5c574e;
+}
+
+.ghost-btn:hover {
+  background: #efe7d8;
+}
+
+.controls {
+  margin-bottom: 0.9rem;
+}
+
+.search {
+  flex: 1 1 10rem;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #5c574e;
+  font-size: 0.9rem;
 }
 
 .toolbar {
@@ -135,13 +218,18 @@
 
 .list li {
   display: grid;
-  grid-template-columns: auto 1fr auto auto;
-  align-items: center;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
   gap: 0.55rem;
-  padding: 0.7rem 0.75rem;
+  padding: 0.75rem 0.8rem;
   border-radius: 0.9rem;
   background: #fffdf8;
   border: 1px solid #ece4d6;
+}
+
+.actions {
+  display: flex;
+  gap: 0.15rem;
 }
 
 .list li.done .text {
@@ -152,17 +240,81 @@
 .list input[type='checkbox'] {
   width: 1.1rem;
   height: 1.1rem;
+  margin-top: 0.35rem;
   accent-color: #1f6f5b;
 }
 
+.body,
+.edit-row {
+  min-width: 0;
+}
+
+.edit-row {
+  grid-column: 2;
+}
+
+.edit {
+  flex: 1 1 8rem;
+}
+
 .text {
+  display: block;
+  width: 100%;
   text-align: left;
   background: none;
   border: 0;
   font: inherit;
   color: inherit;
-  padding: 0.15rem 0;
+  padding: 0.1rem 0;
   cursor: text;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.3rem;
+}
+
+.priority,
+.due {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+}
+
+.priority.high {
+  background: #f8d9d4;
+  color: #8a2b22;
+}
+
+.priority.medium {
+  background: #f3e4c4;
+  color: #7a5a1e;
+}
+
+.priority.low {
+  background: #dce9e2;
+  color: #1f5a48;
+}
+
+.due {
+  background: #ece4d6;
+  color: #5c574e;
+}
+
+.due.today {
+  background: #f3e4c4;
+  color: #7a5a1e;
+}
+
+.due.overdue {
+  background: #f8d9d4;
+  color: #8a2b22;
 }
 
 .icon {
@@ -171,6 +323,7 @@
   letter-spacing: 0.02em;
   color: #6d675e;
   padding: 0.25rem 0.35rem;
+  margin-top: 0.15rem;
 }
 
 .icon:hover {
@@ -193,13 +346,31 @@
   border: 0;
 }
 
-@media (max-width: 520px) {
-  .toolbar {
+@media (max-width: 640px) {
+  .toolbar,
+  .controls {
     flex-direction: column;
     align-items: stretch;
   }
 
+  .search,
+  .composer input,
+  .composer select,
+  .composer button {
+    flex: none;
+    width: 100%;
+  }
+
   .filters {
     justify-content: space-between;
+  }
+
+  .list li {
+    grid-template-columns: auto 1fr;
+  }
+
+  .actions {
+    grid-column: 2;
+    justify-self: end;
   }
 }

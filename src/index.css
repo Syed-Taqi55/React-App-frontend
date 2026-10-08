@@ -25,7 +25,8 @@ body {
 }
 
 button,
-input {
+input,
+select {
   font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
