@@ -35,7 +35,7 @@ jobs:
     steps:
       - name: Pull image from dockerhub
         run: docker pull syedtaqi879/frontendapp:latest
-      - name: Delete Old Container
+      - name: Delete Old Containerr
         run: docker rm -f reactContainer  
       - name: run docker container
         run: docker run -d -p 3000:80 --name reactContainer syedtaqi879/frontendapp
