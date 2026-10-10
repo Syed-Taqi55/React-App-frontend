@@ -16,3 +16,5 @@ npm run dev
 - Filter by status, filter by priority, search, and sort
 - Overdue and due-today labels
 - Completion progress and clear-completed
+- Deploy on AWS
+- EC2->Docker Image->Docker Hub
